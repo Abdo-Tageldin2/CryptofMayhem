@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "496072832713",
+    "project_id": "cardgame-bbe90",
+    "storage_bucket": "cardgame-bbe90.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496072832713:android:e6f78aa61937aa26b9bf18",
+        "android_client_info": {
+          "package_name": "com.tag.cardgame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-zMDHIv73IGbnOAJNjgg7oDUCi1mk63M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42f7dea3e44864ddeae39bb249a69f4b, type: 3}
+  m_Name: Sheildanddraw
+  m_EditorClassIdentifier: Assembly-CSharp::CardData
+  cardName: sheild and draw
+  description: Draw 1 and gain 1sheild.
+  artwork: {fileID: 6307215918201515368, guid: 08c1cf13e46424191b8fc1725955c9e2, type: 3}
+  targetType: 0
+  effects:
+  - type: 3
+    value: 1
+  - type: 2
+    value: 1

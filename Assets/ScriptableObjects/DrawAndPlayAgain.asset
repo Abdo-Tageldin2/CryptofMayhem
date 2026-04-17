@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42f7dea3e44864ddeae39bb249a69f4b, type: 3}
+  m_Name: DrawAndPlayAgain
+  m_EditorClassIdentifier: Assembly-CSharp::CardData
+  cardName: Draw & Play Again
+  description: Draw 1 and gain 1 extra action.
+  artwork: {fileID: 2079076812201371157, guid: a6a9ca15cee10451ba7b745c108a46fb, type: 3}
+  targetType: 1
+  effects:
+  - type: 3
+    value: 1
+  - type: 4
+    value: 1
