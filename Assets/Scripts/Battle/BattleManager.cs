@@ -52,6 +52,7 @@ public class BattleManager : MonoBehaviour
         if (I != null) { Destroy(gameObject); return; }
         I = this;
     }
+    
 
     void Start()
     {
@@ -79,6 +80,11 @@ public class BattleManager : MonoBehaviour
     void ApplyDifficulty()
     {
         DifficultyApplier.Apply(enemyAI, ref roundLimit);
+    }
+    // is the player allowed to play a card right now?
+    public bool CanPlayerAct
+    {
+        get { return playerTurn && actionsRemaining > 0; }
     }
 
     public void RefreshUI()

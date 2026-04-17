@@ -13,6 +13,7 @@ public class CardView : MonoBehaviour
     [Header("Data")]
     public CardData data;
 
+
     [Header("Runtime")]
     [SerializeField] private Owner owner = Owner.Player;
     private Button btn;
@@ -72,8 +73,9 @@ public class CardView : MonoBehaviour
     {
         if (owner != Owner.Player) return;
         if (data == null) return;
+        if (BattleManager.I == null || !BattleManager.I.CanPlayerAct) return;  // checks if player turn or have turns left so it does not play unless player has turn
 
-        if (BattleManager.I != null)
-            BattleManager.I.OnPlayerCardClicked(this);
+        if (MusicPlayer.I != null) MusicPlayer.I.PlayClickSfx();
+        BattleManager.I.OnPlayerCardClicked(this);
     }
 }
