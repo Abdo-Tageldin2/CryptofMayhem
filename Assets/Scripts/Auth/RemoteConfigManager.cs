@@ -26,6 +26,7 @@ public class RemoteConfigManager : MonoBehaviour
     // called by FirebaseManager once Firebase is up
     public void Fetch()
     {
+        Debug.Log("[RemoteConfig] Fetch started");
         FirebaseRemoteConfig config = FirebaseRemoteConfig.DefaultInstance;
 
         // fallback values in case the server is unreachable
@@ -38,18 +39,29 @@ public class RemoteConfigManager : MonoBehaviour
 
         config.SetDefaultsAsync(defaults).ContinueWith(setTask =>
         {
-            if (setTask.IsFaulted) return;
-
-            config.FetchAsync(TimeSpan.FromHours(1)).ContinueWith(fetchTask =>
+            if (setTask.IsFaulted)
             {
-                if (fetchTask.IsFaulted) return;
+                Debug.LogError("[RemoteConfig] SetDefaults failed: " + setTask.Exception);
+                return;
+            }
+
+            // zero cache so we always get the latest values
+            config.FetchAsync(TimeSpan.Zero).ContinueWith(fetchTask =>
+            {
+                if (fetchTask.IsFaulted)
+                {
+                    Debug.LogError("[RemoteConfig] Fetch failed: " + fetchTask.Exception);
+                    return;
+                }
 
                 config.ActivateAsync().ContinueWith(activateTask =>
                 {
                     usernamePlaceholder = config.GetValue("username_placeholder").StringValue;
                     emailPlaceholder    = config.GetValue("email_placeholder").StringValue;
                     passwordPlaceholder = config.GetValue("password_placeholder").StringValue;
-                    Debug.Log("[RemoteConfig] Placeholders fetched!");
+                    Debug.Log("[RemoteConfig] username=" + usernamePlaceholder
+                        + " email=" + emailPlaceholder
+                        + " password=" + passwordPlaceholder);
                 });
             });
         });
