@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+// controls the login, signup, and guest buttons on the auth screen
 public class AuthManager : MonoBehaviour
 {
     [Header("Main Buttons Panel")]
@@ -49,7 +50,6 @@ public class AuthManager : MonoBehaviour
         if (FirebaseManager.I != null) FirebaseManager.I.SignOut();
         PlayerPrefs.DeleteKey("username");
         PlayerPrefs.Save();
-
         ShowMainPanel();
     }
 
@@ -60,6 +60,7 @@ public class AuthManager : MonoBehaviour
         if (signupPanel != null) signupPanel.SetActive(true);
         SetBackground(signupBackground);
         ClearSignup();
+        ApplyPlaceholders();
     }
 
     public void OnLogInPressed()
@@ -69,6 +70,7 @@ public class AuthManager : MonoBehaviour
         if (loginPanel  != null) loginPanel.SetActive(true);
         SetBackground(loginBackground);
         ClearLogin();
+        ApplyPlaceholders();
     }
 
     public void OnGuestPressed()
@@ -174,5 +176,23 @@ public class AuthManager : MonoBehaviour
     {
         if (backgroundImage == null || sprite == null) return;
         backgroundImage.sprite = sprite;
+    }
+    // applies remote config placeholder text to all input fields
+    void ApplyPlaceholders()
+    {
+        if (RemoteConfigManager.I == null) return;
+        SetPlaceholder(signupUsernameField, RemoteConfigManager.I.UsernamePlaceholder);
+        SetPlaceholder(signupEmailField,    RemoteConfigManager.I.EmailPlaceholder);
+        SetPlaceholder(signupPasswordField, RemoteConfigManager.I.PasswordPlaceholder);
+        SetPlaceholder(loginEmailField,     RemoteConfigManager.I.EmailPlaceholder);
+        SetPlaceholder(loginPasswordField,  RemoteConfigManager.I.PasswordPlaceholder);
+    }
+
+    void SetPlaceholder(TMP_InputField field, string text)
+    {
+        if (field == null) return;
+        if (field.placeholder == null) return;
+        TMP_Text ph = field.placeholder.GetComponent<TMP_Text>();
+        if (ph != null) ph.text = text;
     }
 }

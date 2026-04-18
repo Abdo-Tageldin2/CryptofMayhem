@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// animates cards sliding from hand to the played area
 public class PlayedCardFXController : MonoBehaviour
 {
     public static PlayedCardFXController I;

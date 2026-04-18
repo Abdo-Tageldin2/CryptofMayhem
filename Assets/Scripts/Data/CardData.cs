@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// the different things a card can do
 public enum EffectType
 {
     Damage,
