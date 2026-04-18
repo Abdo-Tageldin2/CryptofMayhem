@@ -11,16 +11,21 @@ public class FirebaseManager : MonoBehaviour
 
     [SerializeField] private float initTimeout = 6f;
 
-    FirebaseAuth auth;
-    FirebaseFirestore db;
-    string userId;
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
+    private string userId;
 
-    readonly Queue<Action> mainThreadQueue = new Queue<Action>();
+    private Queue<Action> mainThreadQueue = new Queue<Action>();
 
-    public bool IsReady   { get; private set; }
-    public bool HasFailed { get; private set; }
-    public int  Wins      { get; private set; }
-    public int  Losses    { get; private set; }
+    private bool isReady;
+    private bool hasFailed;
+    private int wins;
+    private int losses;
+
+    public bool IsReady   { get { return isReady; } }
+    public bool HasFailed { get { return hasFailed; } }
+    public int  Wins      { get { return wins; } }
+    public int  Losses    { get { return losses; } }
 
     void Awake()
     {
@@ -35,7 +40,7 @@ public class FirebaseManager : MonoBehaviour
         GameResultRecorder.OnLossRecorded += HandleLoss;
 
         // on some devices CheckAndFixDependenciesAsync just hangs, so bail out after 6s
-        Invoke(nameof(FirebaseTimeout), initTimeout);
+        Invoke("FirebaseTimeout", initTimeout);
 
         try
         {
@@ -47,13 +52,17 @@ public class FirebaseManager : MonoBehaviour
                 if (task.Result != DependencyStatus.Available)
                 {
                     Debug.LogError("[Firebase] Not ready: " + task.Result);
-                    RunOnMainThread(() => HasFailed = true);
+                    RunOnMainThread(() => hasFailed = true);
                     return;
                 }
 
                 auth    = FirebaseAuth.DefaultInstance;
                 db      = FirebaseFirestore.DefaultInstance;
-                RunOnMainThread(() => IsReady = true);
+                RunOnMainThread(() =>
+                {
+                    CancelInvoke("FirebaseTimeout");
+                    isReady = true;
+                });
                 Debug.Log("[Firebase] Ready!");
             });
         }
@@ -61,7 +70,7 @@ public class FirebaseManager : MonoBehaviour
         {
             // Firebase native DLL failed to load (e.g. macOS code signing)
             Debug.LogError("[Firebase] Failed to start: " + e.Message);
-            HasFailed = true;
+            hasFailed = true;
         }
     }
 
@@ -76,7 +85,7 @@ public class FirebaseManager : MonoBehaviour
         if (!IsReady && !HasFailed)
         {
             Debug.LogWarning("[Firebase] Timed out waiting for initialization — marking as failed.");
-            HasFailed = true;
+            hasFailed = true;
         }
     }
 
@@ -101,7 +110,7 @@ public class FirebaseManager : MonoBehaviour
         {
             if (task.IsFaulted)
             {
-                string error = FirebaseErrorMapper.GetMessage(task.Exception);
+                string error = "Something went wrong. Please try again.";
                 Debug.LogError("[Firebase] SignUp failed: " + task.Exception);
                 RunOnMainThread(() => onDone(false, error));
                 return;
@@ -114,7 +123,7 @@ public class FirebaseManager : MonoBehaviour
             {
                 RunOnMainThread(() =>
                 {
-                    PlayerPrefs.SetString(PrefKeys.Username, username);
+                    PlayerPrefs.SetString("username", username);
                     PlayerPrefs.Save();
                     Debug.Log("[Firebase] SignUp fully done");
                     onDone(true, "");
@@ -130,7 +139,7 @@ public class FirebaseManager : MonoBehaviour
         {
             if (task.IsFaulted)
             {
-                string error = FirebaseErrorMapper.GetMessage(task.Exception);
+                string error = "Something went wrong. Please try again.";
                 Debug.LogError("[Firebase] LogIn failed: " + task.Exception);
                 RunOnMainThread(() => onDone(false, error));
                 return;
@@ -153,21 +162,21 @@ public class FirebaseManager : MonoBehaviour
             auth.SignOut();
 
         userId = null;
-        Wins   = 0;
-        Losses = 0;
+        wins   = 0;
+        losses = 0;
         Debug.Log("[Firebase] Signed out.");
     }
 
     void HandleWin()
     {
-        Wins++;
-        SaveStats(PlayerPrefs.GetString(PrefKeys.Username, "Player"), null);
+        wins++;
+        SaveStats(PlayerPrefs.GetString("username", "Player"), null);
     }
 
     void HandleLoss()
     {
-        Losses++;
-        SaveStats(PlayerPrefs.GetString(PrefKeys.Username, "Player"), null);
+        losses++;
+        SaveStats(PlayerPrefs.GetString("username", "Player"), null);
     }
 
     void LoadStats(Action onDone)
@@ -177,8 +186,8 @@ public class FirebaseManager : MonoBehaviour
             if (!task.IsFaulted && task.Result.Exists)
             {
                 DocumentSnapshot snap = task.Result;
-                Wins   = snap.ContainsField("wins")   ? snap.GetValue<int>("wins")   : 0;
-                Losses = snap.ContainsField("losses") ? snap.GetValue<int>("losses") : 0;
+                wins   = snap.ContainsField("wins")   ? snap.GetValue<int>("wins")   : 0;
+                losses = snap.ContainsField("losses") ? snap.GetValue<int>("losses") : 0;
 
                 if (snap.ContainsField("username"))
                 {
@@ -186,19 +195,19 @@ public class FirebaseManager : MonoBehaviour
                     // PlayerPrefs must be set on main thread
                     RunOnMainThread(() =>
                     {
-                        PlayerPrefs.SetString(PrefKeys.Username, name);
+                        PlayerPrefs.SetString("username", name);
                         PlayerPrefs.Save();
                     });
                 }
             }
 
-            onDone?.Invoke();
+            if (onDone != null) onDone.Invoke();
         });
     }
 
     void SaveStats(string username, Action onDone)
     {
-        if (userId == null) { onDone?.Invoke(); return; }
+        if (userId == null) { if (onDone != null) onDone.Invoke(); return; }
 
         var data = new Dictionary<string, object>
         {
@@ -212,7 +221,7 @@ public class FirebaseManager : MonoBehaviour
             if (task.IsFaulted)
                 Debug.LogError("Save failed: " + task.Exception);
 
-            onDone?.Invoke();
+            if (onDone != null) onDone.Invoke();
         });
     }
 

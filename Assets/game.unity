@@ -1451,7 +1451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00b3c6bdafbea49f7a7787639c39fc9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardPool
-  cardPrefab: {fileID: 0}
+  cardPrefab: {fileID: -7353314853589419907, guid: b683d28e9e8804540accaf9e82c4336c, type: 3}
   startSize: 13
 --- !u!1 &1062749923
 GameObject:
@@ -1994,7 +1994,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Restart
+  m_Text: Home
 --- !u!222 &1177468882
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3086,7 +3086,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 1908459978}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:

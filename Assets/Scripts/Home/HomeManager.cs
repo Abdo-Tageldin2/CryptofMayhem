@@ -1,101 +1,80 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using TMPro;
+using UnityEngine;                                                                                                                                                                                                 
+  using UnityEngine.SceneManagement;
+                                                                                                                                                                                                      
+                                                                                                                                                                                                                     
+  // handles home screen navigation — buttons, panels                                                                                                                                       
+  public class HomeManager : MonoBehaviour                                                                                                                                                                           
+  {                                                                                                                                                                                                                
+      [Header("UI References")]
 
-// handles home screen navigation — buttons, panels, and the welcome message
-public class HomeManager : MonoBehaviour
-{
-    [Header("UI References")]
-    public TMP_Text usernameText;
-    public GameObject howToPlayPanel;
-    public GameObject difficultyPanel;
+      public GameObject howToPlayPanel;                                                                                                                                                                              
+      public GameObject difficultyPanel;
+                                                                                                                                                                                                                     
+      private ProfileDisplay profile;                                                                                                                                                                              
 
-    [Header("Timing")]
-    [SerializeField] private float howToPlayDelay = 0.5f;
+      void Start()
+      {
+          profile = GetComponent<ProfileDisplay>();
+          
+          if (howToPlayPanel  != null) howToPlayPanel.SetActive(false);
+          if (difficultyPanel != null) difficultyPanel.SetActive(false);
+      }                                                                                                                                                                                                              
+  
+      public void OnPlayPressed()                                                                                                                                                                                    
+      {                                                                                                                                                                                                            
+          if (difficultyPanel != null)
+              difficultyPanel.SetActive(true);
+          else
+              SceneManager.LoadScene("game");
+      }                                                                                                                                                                                                              
+  
+      public void OnEasyPressed()   { StartGame("easy"); }                                                                                                                                                           
+      public void OnNormalPressed() { StartGame("normal"); }                                                                                                                                                       
+      public void OnHardPressed()   { StartGame("hard"); }
 
-    ProfileDisplay profile;
+      void StartGame(string difficulty)                                                                                                                                                                              
+      {
+          PlayerPrefs.SetString("difficulty", difficulty);                                                                                                                                                           
+          PlayerPrefs.Save();                                                                                                                                                                                      
+          SceneManager.LoadScene("game");
+      }
 
-    void Start()
-    {
-        profile = GetComponent<ProfileDisplay>();
+      public void OnDifficultyBackPressed()
+      {
+          if (difficultyPanel != null)
+              difficultyPanel.SetActive(false);                                                                                                                                                                      
+      }
+                                                                                                                                                                                                                     
+      public void OnHowToPlayPressed()                                                                                                                                                                             
+      {
+          if (howToPlayPanel != null)
+              howToPlayPanel.SetActive(true);
+      }
 
-        string name = PlayerPrefs.GetString(PrefKeys.Username, "Player");
-        if (usernameText != null)
-            usernameText.text = "Welcome, " + name + "!";
+      public void OnHowToPlayClosePressed()                                                                                                                                                                          
+      {
+          if (howToPlayPanel != null)                                                                                                                                                                                
+              howToPlayPanel.SetActive(false);                                                                                                                                                                     
+      }
 
-        if (howToPlayPanel   != null) howToPlayPanel.SetActive(false);
-        if (difficultyPanel  != null) difficultyPanel.SetActive(false);
+      public void OnProfilePressed()
+      {
+          if (profile != null) profile.Show();
+      }
 
-        bool firstTime = PlayerPrefs.GetInt(PrefKeys.HasPlayedBefore, 0) == 0;
-        if (firstTime)
-        {
-            PlayerPrefs.SetInt(PrefKeys.HasPlayedBefore, 1);
-            PlayerPrefs.Save();
-            Invoke(nameof(OpenHowToPlayDelayed), howToPlayDelay);
-        }
-    }
+      public void OnProfileClosePressed()                                                                                                                                                                            
+      {
+          if (profile != null) profile.Hide();                                                                                                                                                                       
+      }                                                                                                                                                                                                            
 
-    void OpenHowToPlayDelayed()
-    {
-        if (howToPlayPanel != null)
-            howToPlayPanel.SetActive(true);
-    }
+      public void OnLogoutPressed()
+      {
+          PlayerPrefs.DeleteKey("username");
+          PlayerPrefs.Save();
 
-    public void OnPlayPressed()
-    {
-        if (difficultyPanel != null)
-            difficultyPanel.SetActive(true);
-        else
-            SceneManager.LoadScene(SceneNames.Game);
-    }
-
-    public void OnEasyPressed()   => StartGame("easy");
-    public void OnNormalPressed() => StartGame("normal");
-    public void OnHardPressed()   => StartGame("hard");
-
-    void StartGame(string difficulty)
-    {
-        PlayerPrefs.SetString(PrefKeys.Difficulty, difficulty);
-        PlayerPrefs.Save();
-        SceneManager.LoadScene(SceneNames.Game);
-    }
-
-    public void OnDifficultyBackPressed()
-    {
-        if (difficultyPanel != null)
-            difficultyPanel.SetActive(false);
-    }
-
-    public void OnHowToPlayPressed()
-    {
-        if (howToPlayPanel != null)
-            howToPlayPanel.SetActive(true);
-    }
-
-    public void OnHowToPlayClosePressed()
-    {
-        if (howToPlayPanel != null)
-            howToPlayPanel.SetActive(false);
-    }
-
-    public void OnProfilePressed()
-    {
-        if (profile != null) profile.Show();
-    }
-
-    public void OnProfileClosePressed()
-    {
-        if (profile != null) profile.Hide();
-    }
-
-    public void OnLogoutPressed()
-    {
-        PlayerPrefs.DeleteKey(PrefKeys.Username);
-        PlayerPrefs.Save();
-
-        if (FirebaseManager.I != null)
-            FirebaseManager.I.SignOut();
-
-        SceneManager.LoadScene(SceneNames.Auth);
-    }
-}
+          if (FirebaseManager.I != null)                                                                                                                                                                             
+              FirebaseManager.I.SignOut();
+                                                                                                                                                                                                                     
+          SceneManager.LoadScene("auth");                                                                                                                                                                          
+      }
+  }

@@ -3,9 +3,9 @@ using UnityEngine;
 // applies card effects for both player and enemy — one place instead of two
 public class CardEffectResolver : MonoBehaviour
 {
-    BattleManager bm;
-    ShieldSystem shields;
-    DeckManager deck;
+    private BattleManager bm;
+    private ShieldSystem shields;
+    private DeckManager deck;
 
     void Start()
     {
@@ -33,8 +33,7 @@ public class CardEffectResolver : MonoBehaviour
             }
         }
 
-        bm.playerHp = Mathf.Max(0, bm.playerHp);
-        bm.enemyHp  = Mathf.Max(0, bm.enemyHp);
+        bm.enemyHp = Mathf.Max(0, bm.enemyHp);
 
         return extraActions;
     }
@@ -52,7 +51,10 @@ public class CardEffectResolver : MonoBehaviour
             {
                 case EffectType.Heal:      bm.enemyHp = Mathf.Min(bm.enemyMaxHp, bm.enemyHp + e.value);                     break;
                 case EffectType.Shield:    shields.AddEnemyShield(e.value);                                                    break;
-                case EffectType.Damage:    bm.playerHp = Mathf.Max(0, bm.playerHp - shields.AbsorbPlayerDamage(e.value));      break;
+                case EffectType.Damage:
+                    int leftover = shields.AbsorbPlayerDamage(e.value);
+                    bm.playerHp = Mathf.Max(0, bm.playerHp - leftover);
+                    break;
                 case EffectType.Draw:      deck.DrawCards(Owner.Enemy, e.value);                                                break;
                 case EffectType.PlayAgain: extraActions += e.value;                                                             break;
             }

@@ -1657,8 +1657,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 26, y: -50}
-  m_SizeDelta: {x: 430, y: 110}
+  m_AnchoredPosition: {x: 57.861694, y: -52.49999}
+  m_SizeDelta: {x: 493.7233, y: 105}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &510208272
 MonoBehaviour:
@@ -1700,94 +1700,10 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 510208273}
+  m_TargetGraphic: {fileID: 938405990}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2120093930}
-        m_TargetAssemblyTypeName: HomeManager, Assembly-CSharp
-        m_MethodName: OnHowToPlayPressed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2120093930}
-        m_TargetAssemblyTypeName: HomeManager, Assembly-CSharp
-        m_MethodName: OnHowToPlayPressed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2120093930}
-        m_TargetAssemblyTypeName: HomeManager, Assembly-CSharp
-        m_MethodName: OnHowToPlayPressed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2120093930}
-        m_TargetAssemblyTypeName: HomeManager, Assembly-CSharp
-        m_MethodName: OnHowToPlayPressed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2120093930}
-        m_TargetAssemblyTypeName: HomeManager, Assembly-CSharp
-        m_MethodName: OnHowToPlayPressed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2120093930}
-        m_TargetAssemblyTypeName: HomeManager, Assembly-CSharp
-        m_MethodName: OnHowToPlayPressed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2120093930}
-        m_TargetAssemblyTypeName: HomeManager, Assembly-CSharp
-        m_MethodName: OnHowToPlayPressed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 2120093930}
         m_TargetAssemblyTypeName: HomeManager, Assembly-CSharp
         m_MethodName: OnHowToPlayPressed
@@ -4848,7 +4764,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 26, y: 104}
+  m_AnchoredPosition: {x: 59, y: 110}
   m_SizeDelta: {x: 430, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1035714028
@@ -4895,30 +4811,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2120093930}
-        m_TargetAssemblyTypeName: HomeManager, Assembly-CSharp
-        m_MethodName: OnPlayPressed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2120093930}
-        m_TargetAssemblyTypeName: HomeManager, Assembly-CSharp
-        m_MethodName: OnPlayPressed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 2120093930}
         m_TargetAssemblyTypeName: HomeManager, Assembly-CSharp
         m_MethodName: OnPlayPressed
@@ -6366,7 +6258,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dcadd6fc8e3d6408b8a22a160c8b7274, type: 3}
+  m_Sprite: {fileID: 6874515932384652373, guid: 8f12302fb289940a2b7c7359f6db452b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8298,42 +8190,6 @@ MonoBehaviour:
       - m_Target: {fileID: 2120093930}
         m_TargetAssemblyTypeName: HomeManager, Assembly-CSharp
         m_MethodName: OnProfilePressed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2120093930}
-        m_TargetAssemblyTypeName: HomeManager, Assembly-CSharp
-        m_MethodName: OnProfilePressed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2120093930}
-        m_TargetAssemblyTypeName: HomeManager, Assembly-CSharp
-        m_MethodName: OnProfilePressed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2120093930}
-        m_TargetAssemblyTypeName: HomeManager, Assembly-CSharp
-        m_MethodName: OnProfilePressed
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9141,7 +8997,6 @@ MonoBehaviour:
   usernameText: {fileID: 0}
   howToPlayPanel: {fileID: 938405989}
   difficultyPanel: {fileID: 908154666}
-  howToPlayDelay: 0.5
 --- !u!114 &2120093931
 MonoBehaviour:
   m_ObjectHideFlags: 0

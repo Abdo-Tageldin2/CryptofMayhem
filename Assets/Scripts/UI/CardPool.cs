@@ -8,7 +8,7 @@ public class CardPool : MonoBehaviour
     public CardView cardPrefab;
     [Range(5, 30)] public int startSize = 13;
 
-    private readonly List<CardView> pool = new List<CardView>();
+    private List<CardView> pool = new List<CardView>();
     private Transform poolParent;
 
     void Awake()

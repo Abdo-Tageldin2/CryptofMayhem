@@ -24,10 +24,10 @@ public class BattleUI : MonoBehaviour
 
     public void Refresh(int playerHp, int enemyHp, bool playerTurn, int round, int roundLimit, bool canEndTurn)
     {
-        if (playerHpText) playerHpText.text = $"Player HP: {playerHp}";
-        if (enemyHpText)  enemyHpText.text  = $"Enemy HP: {enemyHp}";
+        if (playerHpText) playerHpText.text = "Player HP: " + playerHp;
+        if (enemyHpText)  enemyHpText.text  = "Enemy HP: " + enemyHp;
         if (turnText)     turnText.text      = playerTurn ? "Your Turn" : "Enemy Turn";
-        if (roundText)    roundText.text     = $"Round {round} / {roundLimit}";
+        if (roundText)    roundText.text     = "Round " + round + " / " + roundLimit;
         if (endTurnButton) endTurnButton.interactable = canEndTurn;
     }
 

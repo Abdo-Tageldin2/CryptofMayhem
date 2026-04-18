@@ -7,13 +7,14 @@ public class DefenseView : MonoBehaviour
     public TMP_Text shieldValueText;
     public Image shieldIcon;
 
-    public int ShieldValue { get; private set; }
+    private int shieldValue;
+    public int ShieldValue { get { return shieldValue; } }
 
     public void SetShield(int value)
     {
-        ShieldValue = value;
+        shieldValue = value;
         if (shieldValueText != null)
-            shieldValueText.text = ShieldValue.ToString();
+            shieldValueText.text = shieldValue.ToString();
     }
     public void SetIconTint(Color c)
     {
@@ -30,13 +31,13 @@ public class DefenseView : MonoBehaviour
     {
         if (dmg <= 0) return 0;
 
-        int absorbed = Mathf.Min(ShieldValue, dmg);
-        ShieldValue -= absorbed;
+        int absorbed = Mathf.Min(shieldValue, dmg);
+        shieldValue -= absorbed;
 
         if (shieldValueText != null)
-            shieldValueText.text = ShieldValue.ToString();
+            shieldValueText.text = shieldValue.ToString();
 
-        if (ShieldValue <= 0)
+        if (shieldValue <= 0)
             Destroy(gameObject);
 
         return dmg - absorbed;

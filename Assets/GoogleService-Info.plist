@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDH5V0O57EUyzPSn7Ryp0Qmz41GeofW_wY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>496072832713</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.abdo.crypt</string>
+	<key>PROJECT_ID</key>
+	<string>cardgame-bbe90</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cardgame-bbe90.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:496072832713:ios:5116db9ce3f022f5b9bf18</string>
+</dict>
+</plist>
