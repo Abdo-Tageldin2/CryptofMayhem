@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// manages draw piles, discard piles, and the hand UI for both players
 public class DeckManager : MonoBehaviour
 {
     [Header("Deck Assets")]

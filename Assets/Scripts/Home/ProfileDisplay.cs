@@ -12,7 +12,6 @@ public class ProfileDisplay : MonoBehaviour
     public TMP_Text winsText;
     public TMP_Text lossesText;
 
-
     void Start()
     {
         if (profilePanel != null)
@@ -30,8 +29,7 @@ public class ProfileDisplay : MonoBehaviour
         int wins   = PlayerPrefs.GetInt("wins",   0);
         int losses = PlayerPrefs.GetInt("losses", 0);
 
-
-        // Firebase has synced stats if the user is logged in
+        // Firebase has the latest stats if the user is logged in
         if (FirebaseManager.I != null && FirebaseManager.I.IsReady)
         {
             wins   = FirebaseManager.I.Wins;
@@ -40,7 +38,6 @@ public class ProfileDisplay : MonoBehaviour
 
         if (winsText   != null) winsText.text   = wins.ToString();
         if (lossesText != null) lossesText.text = losses.ToString();
-
 
         profilePanel.SetActive(true);
     }

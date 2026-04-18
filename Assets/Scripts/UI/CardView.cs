@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// displays a single card in the hand — shows art, name, and effect text
 public class CardView : MonoBehaviour
 {
     [Header("UI References")]
@@ -17,7 +18,6 @@ public class CardView : MonoBehaviour
     [SerializeField] private Owner owner = Owner.Player;
     private Button btn;
 
-    private Sprite faceUpSprite;
     private bool faceDown;
     private Sprite cardBackSprite;
 
@@ -30,7 +30,6 @@ public class CardView : MonoBehaviour
     public void SetCard(CardData newData)
     {
         data = newData;
-        if (data != null) faceUpSprite = data.artwork;
         Refresh();
     }
 

@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// shows the shield icon and value, handles damage absorption
 public class DefenseView : MonoBehaviour
 {
     public TMP_Text shieldValueText;

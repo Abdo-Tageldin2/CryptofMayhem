@@ -5,6 +5,7 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Firestore;
 
+// handles Firebase Auth and Firestore — persists across scenes
 public class FirebaseManager : MonoBehaviour
 {
     public static FirebaseManager I;
@@ -36,8 +37,8 @@ public class FirebaseManager : MonoBehaviour
 
     void Start()
     {
-        GameResultRecorder.OnWinRecorded  += HandleWin;
-        GameResultRecorder.OnLossRecorded += HandleLoss;
+        GameResultRecorder.OnWinRecorded  += OnWin;
+        GameResultRecorder.OnLossRecorded += OnLoss;
 
         // on some devices CheckAndFixDependenciesAsync just hangs, so bail out after 6s
         Invoke("FirebaseTimeout", initTimeout);
@@ -62,6 +63,10 @@ public class FirebaseManager : MonoBehaviour
                 {
                     CancelInvoke("FirebaseTimeout");
                     isReady = true;
+
+                    // fetch remote config now that Firebase is up
+                    if (RemoteConfigManager.I != null)
+                        RemoteConfigManager.I.Fetch();
                 });
                 Debug.Log("[Firebase] Ready!");
             });
@@ -76,8 +81,8 @@ public class FirebaseManager : MonoBehaviour
 
     void OnDestroy()
     {
-        GameResultRecorder.OnWinRecorded  -= HandleWin;
-        GameResultRecorder.OnLossRecorded -= HandleLoss;
+        GameResultRecorder.OnWinRecorded  -= OnWin;
+        GameResultRecorder.OnLossRecorded -= OnLoss;
     }
 
     void FirebaseTimeout()
@@ -167,13 +172,13 @@ public class FirebaseManager : MonoBehaviour
         Debug.Log("[Firebase] Signed out.");
     }
 
-    void HandleWin()
+    void OnWin()
     {
         wins++;
         SaveStats(PlayerPrefs.GetString("username", "Player"), null);
     }
 
-    void HandleLoss()
+    void OnLoss()
     {
         losses++;
         SaveStats(PlayerPrefs.GetString("username", "Player"), null);
@@ -229,5 +234,4 @@ public class FirebaseManager : MonoBehaviour
     {
         lock (mainThreadQueue) { mainThreadQueue.Enqueue(action); }
     }
-
 }
