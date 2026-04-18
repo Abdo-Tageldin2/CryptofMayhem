@@ -36,7 +36,7 @@ public static class CardScorer
 
     static int Sum(CardData card, EffectType type)
     {
-        if (card?.effects == null) return 0;
+        if (card == null || card.effects == null) return 0;
         int total = 0;
         foreach (var e in card.effects)
             if (e != null && e.type == type) total += e.value;

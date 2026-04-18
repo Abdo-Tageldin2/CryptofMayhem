@@ -28,15 +28,12 @@ public class AuthManager : MonoBehaviour
     public Button signupSubmitButton;
     public Button signupBackButton;
 
-    [Header("Loading")]
-    public GameObject loadingOverlay;
-
     [Header("Background Swap")]
     public Image backgroundImage;
     public Sprite loginBackground;
     public Sprite signupBackground;
     public Sprite startBackground;
-    public bool startOnHomeBackground = true;
+
 
     void Start()
     {
@@ -50,7 +47,7 @@ public class AuthManager : MonoBehaviour
         if (signupBackButton   != null) signupBackButton.onClick.AddListener(ShowMainPanel);
 
         if (FirebaseManager.I != null) FirebaseManager.I.SignOut();
-        PlayerPrefs.DeleteKey(PrefKeys.Username);
+        PlayerPrefs.DeleteKey("username");
         PlayerPrefs.Save();
 
         ShowMainPanel();
@@ -76,7 +73,7 @@ public class AuthManager : MonoBehaviour
 
     public void OnGuestPressed()
     {
-        PlayerPrefs.SetString(PrefKeys.Username, "Guest");
+        PlayerPrefs.SetString("username", "Guest");
         PlayerPrefs.Save();
         GoToHome();
     }
@@ -88,11 +85,10 @@ public class AuthManager : MonoBehaviour
         string email    = loginEmailField != null ? loginEmailField.text.Trim() : "";
         string password = loginPasswordField != null ? loginPasswordField.text : "";
 
-        if (string.IsNullOrEmpty(email))    { ShowError(loginErrorText, "Please enter your email.");          return; }
+        if (email == "")    { ShowError(loginErrorText, "Please enter your email.");          return; }
         if (password.Length < 6)            { ShowError(loginErrorText, "Password must be at least 6 characters."); return; }
 
         loginErrorText.text = "";
-        SetLoading(true);
         FirebaseManager.I.LogIn(email, password, OnAuthDone);
     }
 
@@ -104,12 +100,11 @@ public class AuthManager : MonoBehaviour
         string email    = signupEmailField    != null ? signupEmailField.text.Trim()    : "";
         string password = signupPasswordField != null ? signupPasswordField.text        : "";
 
-        if (string.IsNullOrEmpty(username)) { ShowError(signupErrorText, "Please enter a username."); return; }
-        if (string.IsNullOrEmpty(email))    { ShowError(signupErrorText, "Please enter your email."); return; }
+        if (username == "") { ShowError(signupErrorText, "Please enter a username."); return; }
+        if (email == "")    { ShowError(signupErrorText, "Please enter your email."); return; }
         if (password.Length < 6)            { ShowError(signupErrorText, "Password must be at least 6 characters."); return; }
 
         signupErrorText.text = "";
-        SetLoading(true);
         FirebaseManager.I.SignUp(email, password, username, OnAuthDone);
     }
 
@@ -130,7 +125,6 @@ public class AuthManager : MonoBehaviour
 
     void OnAuthDone(bool success, string error)
     {
-        SetLoading(false);
         if (success) GoToHome();
         else
         {
@@ -147,10 +141,8 @@ public class AuthManager : MonoBehaviour
         if (loginErrorText  != null) loginErrorText.text  = "";
         if (signupErrorText != null) signupErrorText.text = "";
 
-        if (startOnHomeBackground && startBackground != null)
+        if (startBackground != null)
             SetBackground(startBackground);
-        else
-            SetBackground(loginBackground);
     }
 
     void ClearLogin()
@@ -173,14 +165,10 @@ public class AuthManager : MonoBehaviour
         if (target != null) target.text = message;
     }
 
-    void SetLoading(bool active)
+    void GoToHome()
     {
-        if (loadingOverlay != null) loadingOverlay.SetActive(active);
-        if (loginSubmitButton  != null) loginSubmitButton.interactable  = !active;
-        if (signupSubmitButton != null) signupSubmitButton.interactable = !active;
+        SceneManager.LoadScene("home");
     }
-
-    void GoToHome() => SceneManager.LoadScene(SceneNames.Home);
 
     void SetBackground(Sprite sprite)
     {

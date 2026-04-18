@@ -46,7 +46,7 @@ public class ShieldSystem : MonoBehaviour
         return GetShieldValue(enemyDefenseArea);
     }
 
-    DefenseView GetOrCreate(Transform area)
+    private DefenseView GetOrCreate(Transform area)
     {
         if (area == null || defensePrefab == null) return null;
 
@@ -58,7 +58,7 @@ public class ShieldSystem : MonoBehaviour
         return dv;
     }
 
-    int Absorb(Transform area, int dmg)
+    private int Absorb(Transform area, int dmg)
     {
         if (dmg <= 0) return 0;
         if (area == null || area.childCount == 0) return dmg;
@@ -67,7 +67,7 @@ public class ShieldSystem : MonoBehaviour
         return dv != null ? dv.AbsorbDamage(dmg) : dmg;
     }
 
-    int GetShieldValue(Transform area)
+    private int GetShieldValue(Transform area)
     {
         if (area == null || area.childCount == 0) return 0;
         var dv = area.GetChild(0).GetComponent<DefenseView>();

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 // core game loop — tracks HP, manages turns, resolves card effects
@@ -35,24 +36,23 @@ public class BattleManager : MonoBehaviour
     [Header("Actions")]
     public int actionsPerTurn = 1;
 
-    bool playerTurn = true;
+    private bool playerTurn = true;
 
-    int currentRound = 0;
-    int actionsRemaining = 1;
-    bool playedAtLeastOneCard = false;
+    private int currentRound = 0;
+    private int actionsRemaining;
+    private bool playedAtLeastOneCard = false;
 
-    ShieldSystem shields;
-    EnemyAI enemyAI;
-    CardEffectResolver resolver;
-    GameOverHandler gameOver;
-    BattleUI ui;
+    private ShieldSystem shields;
+    private EnemyAI enemyAI;
+    private CardEffectResolver resolver;
+    private GameOverHandler gameOver;
+    private BattleUI ui;
 
     void Awake()
     {
         if (I != null) { Destroy(gameObject); return; }
         I = this;
     }
-    
 
     void Start()
     {
@@ -79,7 +79,7 @@ public class BattleManager : MonoBehaviour
 
     void ApplyDifficulty()
     {
-        DifficultyApplier.Apply(enemyAI, ref roundLimit);
+        DifficultyApplier.Apply(enemyAI, this);
     }
     // is the player allowed to play a card right now?
     public bool CanPlayerAct
@@ -119,10 +119,13 @@ public class BattleManager : MonoBehaviour
 
         playerTurn = false;
         RefreshUI();
-        Invoke(nameof(TriggerEnemyTurn), turnTransitionDelay);
+        Invoke("TriggerEnemyTurn", turnTransitionDelay);
     }
 
-    void TriggerEnemyTurn() => enemyAI.StartTurn();
+    void TriggerEnemyTurn()
+    {
+        enemyAI.StartTurn();
+    }
 
     public void OnPlayerCardClicked(CardView view)
     {
@@ -169,27 +172,27 @@ public class BattleManager : MonoBehaviour
 
         if (currentRound >= roundLimit)
         {
-            ui?.DisableEndTurn();
+            if (ui != null) ui.DisableEndTurn();
             gameOver.ShowTimeUp(playerHp, enemyHp);
             return;
         }
 
-        Invoke(nameof(StartPlayerTurn), enemyHoldSeconds + turnTransitionDelay);
+        Invoke("StartPlayerTurn", enemyHoldSeconds + turnTransitionDelay);
     }
 
     void EndGame(bool playerWon)
     {
-        ui?.DisableEndTurn();
+        if (ui != null) ui.DisableEndTurn();
         gameOver.Show(playerWon);
     }
 
     public void OnRestartPressed()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(SceneNames.Home);
+        SceneManager.LoadScene("home");
     }
 
     public void OnQuitPressed()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(SceneNames.Home);
+        SceneManager.LoadScene("home");
     }
 }

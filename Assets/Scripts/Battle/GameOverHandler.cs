@@ -39,7 +39,11 @@ public class GameOverHandler : MonoBehaviour
 
         if (panel) panel.SetActive(true);
 
-        if (draw)           GameResultRecorder.RecordDraw();
+        if (draw)
+        {
+            PlayerPrefs.SetInt("draws", PlayerPrefs.GetInt("draws", 0) + 1);
+            PlayerPrefs.Save();
+        }
         else if (playerWon) GameResultRecorder.RecordWin();
         else                GameResultRecorder.RecordLoss();
     }

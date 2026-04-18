@@ -9,24 +9,20 @@ public class EnemyAI : MonoBehaviour
     [SerializeField, Range(0f, 2f)] private float firstPlayDelay = 0.35f;
     [SerializeField, Range(0f, 2f)] private float cardPlayDelay  = 0.55f;
 
-    int actionsLeft;
-    int playsThisTurn;
+    private int actionsLeft;
+    private int playsThisTurn;
 
-    BattleManager bm;
-    ShieldSystem shields;
-    CardEffectResolver resolver;
-    DeckManager deck;
+    private BattleManager bm;
+    private ShieldSystem shields;
+    private CardEffectResolver resolver;
+    private DeckManager deck;
 
-    void Awake()
+    void Start()
     {
         bm       = GetComponent<BattleManager>();
         shields  = GetComponent<ShieldSystem>();
         resolver = GetComponent<CardEffectResolver>();
-    }
-
-    void Start()
-    {
-        deck = bm.deckManager;
+        deck     = bm.deckManager;
     }
 
     public void StartTurn()
@@ -38,7 +34,7 @@ public class EnemyAI : MonoBehaviour
         if (deck.HandCount(Owner.Enemy) == 0)
             deck.DrawCards(Owner.Enemy, bm.emptyHandDraw);
 
-        Invoke(nameof(PlayLoop), firstPlayDelay);
+        Invoke("PlayLoop", firstPlayDelay);
     }
 
     CardData PickBestCard()
@@ -47,7 +43,7 @@ public class EnemyAI : MonoBehaviour
         if (hand == null || hand.childCount == 0) return null;
 
         CardData best = null;
-        int bestScore = int.MinValue;
+        int bestScore = -999;
         int shieldVal = shields.GetEnemyShieldValue();
 
         for (int i = 0; i < hand.childCount; i++)
@@ -89,7 +85,11 @@ public class EnemyAI : MonoBehaviour
         playsThisTurn++;
 
         bm.RefreshUI();
-        Invoke(nameof(PlayLoop), cardPlayDelay);
+
+        // stop immediately if someone died
+        if (bm.playerHp <= 0 || bm.enemyHp <= 0) { bm.EndEnemyTurn(); return; }
+
+        Invoke("PlayLoop", cardPlayDelay);
     }
 
 }

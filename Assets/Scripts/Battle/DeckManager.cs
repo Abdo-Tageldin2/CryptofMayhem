@@ -18,11 +18,11 @@ public class DeckManager : MonoBehaviour
     private CardPool cardPool;
 
     // Internal piles
-    private readonly List<CardData> playerDeck = new List<CardData>();
-    private readonly List<CardData> playerDiscard = new List<CardData>();
+    private List<CardData> playerDeck = new List<CardData>();
+    private List<CardData> playerDiscard = new List<CardData>();
 
-    private readonly List<CardData> enemyDeck = new List<CardData>();
-    private readonly List<CardData> enemyDiscard = new List<CardData>();
+    private List<CardData> enemyDeck = new List<CardData>();
+    private List<CardData> enemyDiscard = new List<CardData>();
 
     public void Setup()
     {
@@ -106,7 +106,7 @@ public class DeckManager : MonoBehaviour
         }
     }
 
-    void BuildAndShuffle(Owner owner)
+    private void BuildAndShuffle(Owner owner)
     {
         List<CardData> deck = GetDeck(owner);
         List<CardData> discard = GetDiscard(owner);
@@ -121,7 +121,7 @@ public class DeckManager : MonoBehaviour
         Shuffle(deck);
     }
 
-    void ClearHandUI(Owner owner)
+    private void ClearHandUI(Owner owner)
     {
         Transform hand = GetHandContainer(owner);
         if (hand == null) return;
@@ -133,7 +133,7 @@ public class DeckManager : MonoBehaviour
         }
     }
 
-    void ReturnCard(CardView cv)
+    private void ReturnCard(CardView cv)
     {
         if (cardPool != null)
             cardPool.Return(cv);
@@ -141,7 +141,7 @@ public class DeckManager : MonoBehaviour
             Destroy(cv.gameObject);
     }
 
-    static void Shuffle(List<CardData> list)
+    private static void Shuffle(List<CardData> list)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -152,17 +152,17 @@ public class DeckManager : MonoBehaviour
         }
     }
 
-    Transform GetHandContainer(Owner owner)
+    private Transform GetHandContainer(Owner owner)
     {
         return owner == Owner.Player ? playerHandContainer : enemyHandContainer;
     }
 
-    List<CardData> GetDeck(Owner owner)
+    private List<CardData> GetDeck(Owner owner)
     {
         return owner == Owner.Player ? playerDeck : enemyDeck;
     }
 
-    List<CardData> GetDiscard(Owner owner)
+    private List<CardData> GetDiscard(Owner owner)
     {
         return owner == Owner.Player ? playerDiscard : enemyDiscard;
     }

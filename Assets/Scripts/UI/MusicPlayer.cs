@@ -5,7 +5,7 @@ public class MusicPlayer : MonoBehaviour
 {
     public static MusicPlayer I;  // singleton (lec 3)
 
-    [SerializeField] AudioSource clickSfx;  // card click sound
+    [SerializeField] private AudioSource clickSfx;
 
     void Awake()
     {

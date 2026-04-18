@@ -2,7 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
 public class CardView : MonoBehaviour
 {
     [Header("UI References")]
@@ -73,7 +72,7 @@ public class CardView : MonoBehaviour
     {
         if (owner != Owner.Player) return;
         if (data == null) return;
-        if (BattleManager.I == null || !BattleManager.I.CanPlayerAct) return;  // checks if player turn or have turns left so it does not play unless player has turn
+        if (BattleManager.I == null || !BattleManager.I.CanPlayerAct) return;
 
         if (MusicPlayer.I != null) MusicPlayer.I.PlayClickSfx();
         BattleManager.I.OnPlayerCardClicked(this);

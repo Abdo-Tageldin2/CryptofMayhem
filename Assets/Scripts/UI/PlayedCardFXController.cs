@@ -18,7 +18,7 @@ public class PlayedCardFXController : MonoBehaviour
     [Range(0.1f, 2f)]  public float startScale = 0.95f;
     [Range(0.1f, 2f)]  public float endScale = 1.0f;
 
-    private readonly List<GameObject> spawned = new List<GameObject>();
+    private List<GameObject> spawned = new List<GameObject>();
 
     void Awake()
     {
@@ -43,35 +43,41 @@ public class PlayedCardFXController : MonoBehaviour
 
     IEnumerator SlideToSlot(RectTransform slotRect, Vector3 startWorldPos)
     {
-        if (slotRect == null) yield break;
-
-        // allow layout to place it
-        yield return null;
-        if (slotRect == null) yield break;
-
-        Vector3 endWorldPos = slotRect.position;
-
-        slotRect.position = startWorldPos;
-        slotRect.localScale = Vector3.one * startScale;
-
-        float t = 0f;
-        while (t < slideDuration)
+        if (slotRect == null)
         {
-            if (slotRect == null) yield break;
-
-            t += Time.deltaTime;
-            float a = Mathf.Clamp01(t / slideDuration);
-
-            slotRect.position = Vector3.Lerp(startWorldPos, endWorldPos, a);
-            slotRect.localScale = Vector3.Lerp(Vector3.one * startScale, Vector3.one * endScale, a);
-
             yield return null;
         }
-
-        if (slotRect != null)
+        else
         {
-            slotRect.position = endWorldPos;
-            slotRect.localScale = Vector3.one * endScale;
+            // allow layout to place it
+            yield return null;
+
+            if (slotRect != null)
+            {
+                Vector3 endWorldPos = slotRect.position;
+
+                slotRect.position = startWorldPos;
+                slotRect.localScale = Vector3.one * startScale;
+
+                float t = 0f;
+                while (t < slideDuration && slotRect != null)
+                {
+                    t += Time.deltaTime;
+                    float a = t / slideDuration;
+                    if (a > 1f) a = 1f;
+
+                    slotRect.position = Vector3.Lerp(startWorldPos, endWorldPos, a);
+                    slotRect.localScale = Vector3.Lerp(Vector3.one * startScale, Vector3.one * endScale, a);
+
+                    yield return null;
+                }
+
+                if (slotRect != null)
+                {
+                    slotRect.position = endWorldPos;
+                    slotRect.localScale = Vector3.one * endScale;
+                }
+            }
         }
     }
 
